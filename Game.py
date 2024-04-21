@@ -16,6 +16,7 @@ mixer.init()
 init()
 end_time = 0
 total_time = 0
+
 class GamerSprite(sprite.Sprite):
     def __init__(self, player_image, weight, height, player_x, player_y, player_speed, score=0):
         super().__init__()
@@ -36,7 +37,7 @@ class GamerSprite(sprite.Sprite):
 
     def collidepoint(self, x, y):
         return self.rect.collidepoint(x, y)
-    
+
     def move(self, sound):
         global total_score
         self.rect.y += self.speed
@@ -51,7 +52,7 @@ class GamerSprite(sprite.Sprite):
     def catch_up(self, name):
         global total_score
         if name.collidepoint(self.rect.x, self.rect.y):
-            catch = mixer.Sound('laught.mp3')
+            catch = mixer.Sound('media/laught.mp3')
             catch.play()
             total_score += self.score
             self.rect.y = -20
@@ -60,16 +61,17 @@ class GamerSprite(sprite.Sprite):
     def catch_down(self, name):
         global total_score
         if name.collidepoint(self.rect.x, self.rect.y):
-            catch = mixer.Sound('cry.mp3')
+            catch = mixer.Sound('media/cry.mp3')
             catch.play()
             total_score += self.score
             self.rect.y = -20
             self.rect.x = randint(30, 730)
 
-backgroud = transform.scale(image.load('store.jpg'), (1000, 600))
-robot1 = GamerSprite('robot.png', 280, 280, 250, 350, 5)
-robot2 = GamerSprite('santa2.png', robot1.rect.x, 300, 250, 350, 5)
-robot3 = GamerSprite('santa3.png', robot1.rect.x, 300, 250, 350, 5)
+
+backgroud = transform.scale(image.load('media/store.jpg'), (1000, 600))
+robot1 = GamerSprite('media/robot.png', 280, 280, 250, 350, 5)
+robot2 = GamerSprite('media/santa2.png', robot1.rect.x, 300, 250, 350, 5)
+robot3 = GamerSprite('media/santa3.png', robot1.rect.x, 300, 250, 350, 5)
 
 robots = list()
 presents = list()
@@ -80,14 +82,14 @@ eggs = list()
 robots.append(robot1)
 robots.append(robot2)
 robots.append(robot3)
-hairdryer1 = GamerSprite('present.png', 150, 150, randint(30, 730), -20, randint(1, 2), 100)
-hairdryer2 = GamerSprite('present.png', 150, 150, randint(30, 730), -20, randint(1, 2), 100)
-hairdryer3 = GamerSprite('present.png', 150, 150, randint(30, 730), -20, randint(1, 2), 100)
-present1 = GamerSprite('Hairdryer.png', 80, 80, randint(30, 730), -20, randint(1, 2), 300)
-tablet1 = GamerSprite('tablet.png', 80, 80, randint(30, 730), -20, randint(1, 2), 200)
-tablet2 = GamerSprite('tablet.png', 80, 80, randint(30, 730), -20, randint(1, 2), 200)
-egg1 = GamerSprite('egg.png', 100, 100, randint(30, 730), -20, randint(1, 2), -200)
-egg2 = GamerSprite('egg.png', 100, 100, randint(30, 730), -20, randint(1, 2), -200)
+hairdryer1 = GamerSprite('media/present.png', 150, 150, randint(30, 730), -20, randint(1, 2), 100)
+hairdryer2 = GamerSprite('media/present.png', 150, 150, randint(30, 730), -20, randint(1, 2), 100)
+hairdryer3 = GamerSprite('media/present.png', 150, 150, randint(30, 730), -20, randint(1, 2), 100)
+present1 = GamerSprite('media/Hairdryer.png', 80, 80, randint(30, 730), -20, randint(1, 2), 300)
+tablet1 = GamerSprite('media/tablet.png', 80, 80, randint(30, 730), -20, randint(1, 2), 200)
+tablet2 = GamerSprite('media/tablet.png', 80, 80, randint(30, 730), -20, randint(1, 2), 200)
+egg1 = GamerSprite('media/egg.png', 100, 100, randint(30, 730), -20, randint(1, 2), -200)
+egg2 = GamerSprite('media/egg.png', 100, 100, randint(30, 730), -20, randint(1, 2), -200)
 
 hairdryers.append(hairdryer1)
 hairdryers.append(hairdryer2)
@@ -104,7 +106,7 @@ presents.append(present1)'''
 clock = time.Clock()
 FPS = 60
 
-mixer.music.load('12884-muzyka-ozhidanija-v-lifte.mp3')
+mixer.music.load('media/12884-muzyka-ozhidanija-v-lifte.mp3')
 mixer.music.play()
 window = display.set_mode((W, H))
 display.set_caption('Поймай покупки!')
@@ -112,6 +114,7 @@ w = font.SysFont('Arial', 25)
 score_text = w.render('Счет:' + str(total_score), 1, WHITE)
 time_text = w.render('Время:' + str(total_time), 1, WHITE)
 from time import time
+
 pos1 = score_text.get_rect(center=(50, 30))
 pos2 = score_text.get_rect(center=(900, 30))
 a = True
@@ -146,28 +149,28 @@ while a:
         robot.reset()
         for present in hairdryers:
             present.reset()
-            present.move('cry.mp3')
+            present.move('media/cry.mp3')
             present.catch_up(robot)
         if total_time >= 4:
             for i in tablets:
                 i.reset()
-                i.move('cry.mp3')
+                i.move('media/cry.mp3')
                 i.catch_up(robot)
         if total_time >= 6:
             for e in eggs:
                 e.reset()
-                e.move('laught.mp3')
+                e.move('media/laught.mp3')
                 e.catch_down(robot)
         if total_time >= 11:
             for n in presents:
                 n.reset()
-                n.move('cry.mp3')
+                n.move('media/cry.mp3')
                 n.catch_up(robot)
 
         score_text = w.render('Счет:' + str(total_score), 1, WHITE)
         time_text = w.render('Время:' + str(round(total_time, 1)), 1, WHITE)
         window.blit(time_text, pos2)
-        window.blit(score_text, pos1)       
+        window.blit(score_text, pos1)
         clock.tick(FPS)
         display.update()
         end_time = time()
